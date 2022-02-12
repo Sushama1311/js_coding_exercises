@@ -4,10 +4,17 @@
  */
 const sumDigits = n => {
   if (n === undefined) throw new Error("n is required");
+  let sum = 0;
+  while (n) {
+    sum += n % 10;
+    n = Math.floor(n / 10);
+  }
+  return sum;
 };
 
 /**
- * This function creates a range of numbers as an array. It received a start, an end and a step. Step is the gap between numbers in the range. For example, if start = 3, end = 11 and step = 2 the resulting range would be: [3, 5, 7, 9, 11]
+ * This function creates a range of numbers as an array. It received a start, an end and a step. Step is the gap between 
+ * numbers in the range. For example, if start = 3, end = 11 and step = 2 the resulting range would be: [3, 5, 7, 9, 11]
  * Both the start and the end numbers are inclusive.
  * Step is an optional parameter. If it is not provided, assume the step is 1.
  * @param {Number} start
@@ -17,10 +24,32 @@ const sumDigits = n => {
 const createRange = (start, end, step) => {
   if (start === undefined) throw new Error("start is required");
   if (end === undefined) throw new Error("end is required");
+  let loop;
+  let index;
+  const arr = [];
+  if (step == 0) {
+    step = 1;
+    loop = end;
+  } else {
+    loop = end - start;
+  }
+  if ((end - start) % step == 0) {
+    index = 0;
+    for (let i = start; i <= loop; i++) {
+
+      if (i == start)
+        arr[0] = start;
+      else
+        arr[index] = arr[index - 1] + step;
+      index = index + 1;
+    }
+  }
+  return arr;
 };
 
 /**
- * This function takes an array of user objects and their usage in minutes of various applications. The format of the data should be as follows:
+ * This function takes an array of user objects and their usage in minutes of various applications. 
+ * The format of the data should be as follows:
  * [
  *  {
  *    username: "beth_1234",
@@ -51,6 +80,15 @@ const createRange = (start, end, step) => {
 const getScreentimeAlertList = (users, date) => {
   if (users === undefined) throw new Error("users is required");
   if (date === undefined) throw new Error("date is required");
+  users.forEach(function (entry) {
+    entry.screenTime.forEach(function (chileEntry) {
+      if (chileEntry.date.includes(date)) {
+        if ((chileEntry.usage.facebook + chileEntry.usage.instagram + chileEntry.usage.twitter) > 100) {
+          return entry.username;
+        };
+      };
+    });
+  });
 };
 
 /**
@@ -65,6 +103,16 @@ const getScreentimeAlertList = (users, date) => {
  */
 const hexToRGB = hexStr => {
   if (hexStr === undefined) throw new Error("hexStr is required");
+
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hexStr);
+  if (result) {
+    var r = parseInt(result[1], 16);
+    var g = parseInt(result[2], 16);
+    var b = parseInt(result[3], 16);
+    console.log(r + "," + g + "," + b); 
+  }
+
+  return r + "," + g + "," + b;
 };
 
 /**
