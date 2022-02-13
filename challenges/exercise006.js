@@ -98,8 +98,8 @@ const isItPrime = n => {
 
     let arr = [];
     let arrTest = [];
-    for (var i = 0; i < n; ++i) {
-      for (j = 0; j <= 0; ++j) {
+    for (let i = 0; i < n; ++i) {
+      for (let j = 0; j <= 0; ++j) {
         arrTest.push(fill);
       }
       arr.push(arrTest);
